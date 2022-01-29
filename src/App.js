@@ -1,2 +1,9 @@
-import { Index } from "./components";
-export { App } from "components";
+import React from 'react';
+
+import { Game } from './components';
+
+export default function App() {
+  return <Game />;
+}
+
+export { App } from './App';
