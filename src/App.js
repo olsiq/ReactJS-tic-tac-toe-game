@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Game } from './components';
 
-export default function App() {
+function App() {
   return <Game />;
 }
 
-export { App } from './App';
+export { App };
