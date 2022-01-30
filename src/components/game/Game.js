@@ -1,46 +1,47 @@
 import React, { useReducer } from 'react';
 
 import { calculateTicTacToeWinner } from 'libraries/tictactoe';
+import { playerReducer, stepReducer, historyReducer } from 'libraries/reducers';
 import { Board } from 'components/board';
 
 import './game.css';
 
-const stepReducer = (state, action) => {
-  switch (action.type) {
-    case 'CHANGE_STEP':
-      // console.log('change step action works');
-      return (state = action.payload);
+// const stepReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'CHANGE_STEP':
+//       // console.log('change step action works');
+//       return (state = action.payload);
 
-    case 'JUMP_TO':
-      // console.log('jump to action works');
-      return (state = action.payload);
-    default:
-      break;
-  }
-};
+//     case 'JUMP_TO':
+//       // console.log('jump to action works');
+//       return (state = action.payload);
+//     default:
+//       break;
+//   }
+// };
 
-const playerReducer = (state, action) => {
-  switch (action.type) {
-    case 'CHANGE_PLAYER':
-      // console.log('change player action works');
-      return (state = !state);
+// const playerReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'CHANGE_PLAYER':
+//       // console.log('change player action works');
+//       return (state = !state);
 
-    case 'SET_PLAYER':
-      // console.log('set player works action works');
-      return (state = action.payload);
+//     case 'SET_PLAYER':
+//       // console.log('set player works action works');
+//       return (state = action.payload);
 
-    default:
-      // console.log('error at player reducer');
-      break;
-  }
-};
+//     default:
+//       // console.log('error at player reducer');
+//       break;
+//   }
+// };
 
-const historyReducer = (state, action) => {
-  //console.log('history action works');
-  if (action.type === 'CHANGE_HISTORY') {
-    return (state = action.payload);
-  }
-};
+// const historyReducer = (state, action) => {
+//   //console.log('history action works');
+//   if (action.type === 'CHANGE_HISTORY') {
+//     return (state = action.payload);
+//   }
+// };
 
 function Game() {
   //states
