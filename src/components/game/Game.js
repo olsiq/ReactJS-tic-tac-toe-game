@@ -23,7 +23,6 @@ const oneReducer = (state, action) => {
       };
 
     case 'ON_CLICK':
-      console.log(state);
       return {
         player: !state.player,
         step: action.payload1,
