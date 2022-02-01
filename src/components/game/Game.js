@@ -58,8 +58,9 @@ export const Game = () => {
   winner
     ? (status = `winner ${winner}`)
     : (status = `next player ${obj.player ? 'X' : 'O'}`);
-
-  obj.step === 9 && (status = 'DRAW');
+  if (obj.step === 9 && !winner) {
+    status = 'DRAW';
+  }
   //click function
   const handleClick = (i) => {
     //if we click a btn in previous move history will update
