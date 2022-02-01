@@ -1,35 +1,10 @@
 import React, { useReducer } from 'react';
 
-import { calculateTicTacToeWinner } from 'libraries/tictactoe';
-//import { playerReducer, stepReducer, historyReducer } from 'libraries/reducers';
+import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
+import { oneReducer } from 'libraries/reducers';
 import { Board } from 'components/board';
 
 import './game.css';
-
-const oneReducer = (state, action) => {
-  switch (action.type) {
-    case 'JUMP_TO':
-      return {
-        player: state.player,
-        step: action.payload,
-        history: state.history,
-      };
-
-    case 'SET_PLAYER':
-      return {
-        player: action.payload,
-        step: state.step,
-        history: state.history,
-      };
-
-    case 'ON_CLICK':
-      return {
-        player: !state.player,
-        step: action.payload1,
-        history: action.payload2,
-      };
-  }
-};
 
 export const Game = () => {
   //use reduce
