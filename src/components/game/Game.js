@@ -1,67 +1,53 @@
 import React, { useReducer } from 'react';
 
 import { calculateTicTacToeWinner } from 'libraries/tictactoe';
-import { playerReducer, stepReducer, historyReducer } from 'libraries/reducers';
+//import { playerReducer, stepReducer, historyReducer } from 'libraries/reducers';
 import { Board } from 'components/board';
 
 import './game.css';
 
-// const stepReducer = (state, action) => {
-//   switch (action.type) {
-//     case 'CHANGE_STEP':
-//       // console.log('change step action works');
-//       return (state = action.payload);
+const oneReducer = (state, action) => {
+  switch (action.type) {
+    case 'JUMP_TO':
+      return {
+        player: state.player,
+        step: action.payload,
+        history: state.history,
+      };
 
-//     case 'JUMP_TO':
-//       // console.log('jump to action works');
-//       return (state = action.payload);
-//     default:
-//       break;
-//   }
-// };
+    case 'SET_PLAYER':
+      return {
+        player: action.payload,
+        step: state.step,
+        history: state.history,
+      };
 
-// const playerReducer = (state, action) => {
-//   switch (action.type) {
-//     case 'CHANGE_PLAYER':
-//       // console.log('change player action works');
-//       return (state = !state);
+    case 'ON_CLICK':
+      console.log(state);
+      return {
+        player: !state.player,
+        step: action.payload1,
+        history: action.payload2,
+      };
+  }
+};
 
-//     case 'SET_PLAYER':
-//       // console.log('set player works action works');
-//       return (state = action.payload);
-
-//     default:
-//       // console.log('error at player reducer');
-//       break;
-//   }
-// };
-
-// const historyReducer = (state, action) => {
-//   //console.log('history action works');
-//   if (action.type === 'CHANGE_HISTORY') {
-//     return (state = action.payload);
-//   }
-// };
-
-function Game() {
-  //states
-  //const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
-  // const [xIsNext, setXIsnext] = useState(true);
-  //const [stepNumber, setStepNumber] = useState(0);
-
+export const Game = () => {
   //use reduce
+  const initial = {
+    player: true,
+    step: 0,
+    history: [
+      {
+        squares: Array(9).fill(null),
+      },
+    ],
+  };
 
-  const initialStep = 0;
-  const [statePlayer, dispatchPlayer] = useReducer(playerReducer, 'x');
-  const [stepState, dispatchStep] = useReducer(stepReducer, initialStep);
-  const [stateHistory, dispatchHistory] = useReducer(historyReducer, [
-    {
-      squares: Array(9).fill(null),
-    },
-  ]);
+  const [obj, dispatchOneReducer] = useReducer(oneReducer, initial);
 
   //variables
-  const current = stateHistory[stepState];
+  const current = obj.history[obj.step];
   // console.log(current);
   const winnersFunc = calculateTicTacToeWinner(current.squares);
   const winner = winnersFunc ? winnersFunc.slice(0, 1) : null;
@@ -71,18 +57,16 @@ function Game() {
   let status;
   winner
     ? (status = `winner ${winner}`)
-    : (status = `next player ${statePlayer ? 'X' : 'O'}`);
+    : (status = `next player ${obj.player ? 'X' : 'O'}`);
 
-  //(true) && (code) ==> if left of AND operator is true continue else go to next line
-  //if there are no winners status is draw
-  stepState === 9 && (status = 'DRAW');
+  obj.step === 9 && (status = 'DRAW');
   //click function
   const handleClick = (i) => {
     //if we click a btn in previous move history will update
 
-    const funcHistory = stateHistory.slice(0, stepState + 1);
+    const funcHistory = obj.history.slice(0, obj.step + 1);
 
-    const current = funcHistory[stepState];
+    const current = funcHistory[obj.step];
 
     //we copy the squares array from current object to squaresInFunc
     const squaresInFunc = current.squares.slice();
@@ -91,22 +75,23 @@ function Game() {
     if (calculateTicTacToeWinner(squaresInFunc) || squaresInFunc[i]) {
       return;
     }
-    squaresInFunc[i] = statePlayer ? 'X' : 'O';
+    squaresInFunc[i] = obj.player ? 'X' : 'O';
     const changeHistory = funcHistory.concat([{ squares: squaresInFunc }]);
-
-    dispatchHistory({ type: 'CHANGE_HISTORY', payload: changeHistory });
-    dispatchStep({ type: 'CHANGE_STEP', payload: funcHistory.length });
-    dispatchPlayer({ type: 'CHANGE_PLAYER' });
+    dispatchOneReducer({
+      type: 'ON_CLICK',
+      payload2: changeHistory,
+      payload1: funcHistory.length,
+    });
   };
   const jumpTo = (step) => {
-    dispatchStep({ type: 'JUMP_TO', payload: step });
+    dispatchOneReducer({ type: 'JUMP_TO', payload: step });
     //if the step we move is even the next player is must be "x"
     step % 2 === 0
-      ? dispatchPlayer({ type: 'SET_PLAYER', payload: true })
-      : dispatchPlayer({ type: 'SET_PLAYER', payload: false });
+      ? dispatchOneReducer({ type: 'SET_PLAYER', payload: true })
+      : dispatchOneReducer({ type: 'SET_PLAYER', payload: false });
   };
   //console.log(history);
-  const moves = stateHistory.map((step, move) => {
+  const moves = obj.history.map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
       <li key={move}>
@@ -126,6 +111,4 @@ function Game() {
       </div>
     </div>
   );
-}
-
-export { Game };
+};
