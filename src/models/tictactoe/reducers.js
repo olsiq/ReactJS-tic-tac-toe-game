@@ -51,8 +51,8 @@ const reducer = (state = initialState, action) => {
       const changeHistory = funcHistory.concat([{ squares: squaresInFunc }]);
       return {
         player: !state.player,
-        step: action.payload1,
-        history: action.payload2,
+        step: funcHistory.length,
+        history: changeHistory,
       };
   }
 };
