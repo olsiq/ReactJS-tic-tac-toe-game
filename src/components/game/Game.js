@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 
-//import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
 import { reducer, initialState } from 'models/tictactoe/reducers';
 import { Board } from 'components/board';
 
@@ -8,18 +7,17 @@ import './game.css';
 import { play, jump } from 'models/tictactoe/actions';
 
 export const Game = () => {
-  //use reduce
-
   const [obj, dispatch] = useReducer(reducer, initialState);
 
   //click function
   const handleClick = (i) => {
     dispatch(play({ i }));
   };
+
   const jumpTo = (step) => {
-    dispatch(jump(step));
+    dispatch(jump({ step }));
   };
-  //console.log(history);
+
   const moves = obj.history.map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (

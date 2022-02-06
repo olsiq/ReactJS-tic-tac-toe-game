@@ -23,23 +23,26 @@ const reducer = (state = initialState, action) => {
   // console.log(current);
   const winnersFunc = calculateTicTacToeWinner(current.squares);
 
-  let winners;
-  winnersFunc && (winners = winnersFunc.slice(1));
+  const winners = winnersFunc ? winnersFunc[0] : 'empty';
 
   switch (action.type) {
     case JUMP_TO:
+      const updatedCurrent = state.history[action.payload.step];
+
       let newplayer;
       if (action.payload.step % 2 === 0) {
         newplayer = true;
       } else {
         newplayer = false;
       }
+
       return {
         player: newplayer,
         step: action.payload.step,
         history: state.history,
-        current: state.current,
-        status: state.status,
+        current: updatedCurrent,
+        status: newplayer ? 'Current Player O' : `Current Player X`,
+        winnersFunc: null,
       };
 
     case PLAY:
@@ -53,8 +56,8 @@ const reducer = (state = initialState, action) => {
       const squaresInFunc = current.squares.slice();
 
       const updatedWinnerArray = calculateTicTacToeWinner(squaresInFunc);
-      console.log(updatedWinnerArray);
-      const updatedStatus = state.player
+
+      let updatedStatus = state.player
         ? 'Current Player O'
         : `Current Player X`;
 
@@ -80,7 +83,7 @@ const reducer = (state = initialState, action) => {
         history: changeHistory,
         current: changeHistory[funcHistory.length],
         status: updatedStatus,
-        winnersFunc: null,
+        winnersFunc: winners,
       };
 
     default:
