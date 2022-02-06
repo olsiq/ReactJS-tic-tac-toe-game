@@ -15,6 +15,7 @@ const initialState = {
     squares: Array(9).fill(null),
   },
   winnersFunc: null,
+  status: `Player X it's your turn`,
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +38,8 @@ const reducer = (state = initialState, action) => {
         player: newplayer,
         step: action.payload.step,
         history: state.history,
+        current: state.current,
+        status: state.status,
       };
 
     case PLAY:
@@ -50,12 +53,23 @@ const reducer = (state = initialState, action) => {
       const squaresInFunc = current.squares.slice();
       console.log(squaresInFunc);
       console.log(squaresInFunc[action.payload.i]);
+      const updatedStatus = state.player
+        ? 'Current Player O'
+        : `Current Player X`;
+
       // //one each click we check if we won or if btn has a value
       if (
         calculateTicTacToeWinner(squaresInFunc) ||
         squaresInFunc[action.payload.i]
       ) {
-        return console.log('same');
+        return {
+          player: state.player,
+          step: state.step,
+          history: state.history,
+          current: state.current,
+          status: state.status,
+          winnersFunc: state.winnersFunc,
+        };
       }
       squaresInFunc[action.payload.i] = state.player ? 'X' : 'O';
       const changeHistory = funcHistory.concat([{ squares: squaresInFunc }]);
@@ -63,8 +77,14 @@ const reducer = (state = initialState, action) => {
         player: !state.player,
         step: funcHistory.length,
         history: changeHistory,
-        current: state.current,
+        current: changeHistory[funcHistory.length],
+        status: updatedStatus,
+        winnersFunc: null,
       };
+
+    default:
+      console.log('error at switch statement');
+      break;
   }
 };
 export { reducer, initialState };

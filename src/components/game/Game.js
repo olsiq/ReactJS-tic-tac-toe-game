@@ -12,7 +12,6 @@ export const Game = () => {
 
   const [obj, dispatch] = useReducer(reducer, initialState);
 
-  let status = `next player ${obj.player ? 'X' : 'O'}`;
   //click function
   const handleClick = (i) => {
     dispatch(play({ i }));
@@ -36,7 +35,7 @@ export const Game = () => {
         <Board squares={obj.current.squares} onClick={(i) => handleClick(i)} />
       </div>
       <div className='game-info'>
-        <div>{status}</div>
+        <div>{obj.status}</div>
         <ol>{moves}</ol>
       </div>
     </div>
