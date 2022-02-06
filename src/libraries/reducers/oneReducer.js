@@ -1,4 +1,14 @@
-const oneReducer = (state, action) => {
+const initial = {
+  player: true,
+  step: 0,
+  history: [
+    {
+      squares: Array(9).fill(null),
+    },
+  ],
+};
+
+const oneReducer = (state = initial, action) => {
   switch (action.type) {
     case 'JUMP_TO':
       return {
@@ -7,14 +17,7 @@ const oneReducer = (state, action) => {
         history: state.history,
       };
 
-    case 'SET_PLAYER':
-      return {
-        player: action.payload,
-        step: state.step,
-        history: state.history,
-      };
-
-    case 'ON_CLICK':
+    case 'PLAY':
       return {
         player: !state.player,
         step: action.payload1,
@@ -22,4 +25,4 @@ const oneReducer = (state, action) => {
       };
   }
 };
-export default oneReducer;
+export { oneReducer, initial };
