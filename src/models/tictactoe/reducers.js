@@ -51,8 +51,9 @@ const reducer = (state = initialState, action) => {
 
       //we copy the squares array from current object to squaresInFunc
       const squaresInFunc = current.squares.slice();
-      console.log(squaresInFunc);
-      console.log(squaresInFunc[action.payload.i]);
+
+      const updatedWinnerArray = calculateTicTacToeWinner(squaresInFunc);
+      console.log(updatedWinnerArray);
       const updatedStatus = state.player
         ? 'Current Player O'
         : `Current Player X`;
