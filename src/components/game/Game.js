@@ -1,15 +1,15 @@
 import React, { useReducer } from 'react';
 
 import { reducer, initialState } from 'models/tictactoe/reducers';
+
 import { Board } from 'components/board';
 
 import './game.css';
-import { play, jump } from 'models/tictactoe/actions';
+import { play, jump, gameOver } from 'models/tictactoe/actions';
 
 export const Game = () => {
   const [obj, dispatch] = useReducer(reducer, initialState);
 
-  //click function
   const handleClick = (i) => {
     dispatch(play({ i }));
   };

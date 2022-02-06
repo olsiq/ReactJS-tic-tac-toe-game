@@ -9,3 +9,8 @@ export const jump = (payload) => ({
   type: JUMP_TO,
   payload,
 });
+
+export const GAME_OVER = 'GAME_OVER';
+export const gameOver = () => ({
+  type: GAME_OVER,
+});

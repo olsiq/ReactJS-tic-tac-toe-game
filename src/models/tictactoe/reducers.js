@@ -1,4 +1,4 @@
-import { PLAY, JUMP_TO } from './actions';
+import { PLAY, JUMP_TO, GAME_OVER } from './actions';
 
 import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
 
@@ -14,26 +14,21 @@ const initialState = {
   current: {
     squares: Array(9).fill(null),
   },
-  winnersFunc: null,
+
   status: `Player X it's your turn`,
+  winner: false,
 };
 
 const reducer = (state = initialState, action) => {
-  const current = state.history[state.step];
-  // console.log(current);
-  const winnersFunc = calculateTicTacToeWinner(current.squares);
-
-  const winners = winnersFunc ? winnersFunc[0] : 'empty';
-
   switch (action.type) {
     case JUMP_TO:
       const updatedCurrent = state.history[action.payload.step];
 
       let newplayer;
-      if (action.payload.step % 2 === 0) {
-        newplayer = true;
-      } else {
+      if (action.payload.step % 2 === 1) {
         newplayer = false;
+      } else {
+        newplayer = true;
       }
 
       return {
@@ -41,8 +36,8 @@ const reducer = (state = initialState, action) => {
         step: action.payload.step,
         history: state.history,
         current: updatedCurrent,
-        status: newplayer ? 'Current Player O' : `Current Player X`,
-        winnersFunc: null,
+        status: newplayer ? 'Current Player X' : `Current Player O`,
+        winner: false,
       };
 
     case PLAY:
@@ -55,7 +50,9 @@ const reducer = (state = initialState, action) => {
       //we copy the squares array from current object to squaresInFunc
       const squaresInFunc = current.squares.slice();
 
-      const updatedWinnerArray = calculateTicTacToeWinner(squaresInFunc);
+      const updatedWinner = calculateTicTacToeWinner(squaresInFunc)
+        ? true
+        : false;
 
       let updatedStatus = state.player
         ? 'Current Player O'
@@ -72,7 +69,7 @@ const reducer = (state = initialState, action) => {
           history: state.history,
           current: state.current,
           status: state.status,
-          winnersFunc: state.winnersFunc,
+          winner: updatedWinner,
         };
       }
       squaresInFunc[action.payload.i] = state.player ? 'X' : 'O';
@@ -83,7 +80,21 @@ const reducer = (state = initialState, action) => {
         history: changeHistory,
         current: changeHistory[funcHistory.length],
         status: updatedStatus,
-        winnersFunc: winners,
+        winner: updatedWinner,
+      };
+
+    case GAME_OVER:
+      const winnerIs = state.player
+        ? 'Winner is Player O'
+        : 'Winner is Player X';
+
+      return {
+        player: state.player,
+        step: state.step,
+        history: state.history,
+        current: state.current,
+        status: winnerIs,
+        winner: true,
       };
 
     default:
