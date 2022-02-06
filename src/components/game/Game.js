@@ -8,7 +8,7 @@ import './game.css';
 import { play, jump, gameOver } from 'models/tictactoe/actions';
 
 export const Game = () => {
-  const [obj, dispatch] = useReducer(reducer, initialState);
+  const [gameState, dispatch] = useReducer(reducer, initialState);
 
   const handleClick = (i) => {
     dispatch(play({ i }));
@@ -18,7 +18,7 @@ export const Game = () => {
     dispatch(jump({ step }));
   };
 
-  const moves = obj.history.map((step, move) => {
+  const moves = gameState.history.map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
       <li key={move}>
@@ -30,10 +30,13 @@ export const Game = () => {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board squares={obj.current.squares} onClick={(i) => handleClick(i)} />
+        <Board
+          squares={gameState.current.squares}
+          onClick={(i) => handleClick(i)}
+        />
       </div>
       <div className='game-info'>
-        <div>{obj.status}</div>
+        <div>{gameState.status}</div>
         <ol>{moves}</ol>
       </div>
     </div>
