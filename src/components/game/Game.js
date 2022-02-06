@@ -5,12 +5,23 @@ import { reducer } from 'models/tictactoe/reducers';
 import { Board } from 'components/board';
 
 import './game.css';
-import { play } from 'models/tictactoe/actions';
+import { play, jump } from 'models/tictactoe/actions';
 
 export const Game = () => {
   //use reduce
+  const initialState = {
+    player: true,
+    step: 0,
+    history: [
+      {
+        squares: Array(9).fill(null),
+      },
+    ],
 
-  const [obj, dispatch] = useReducer(reducer);
+    //   current: history[step],
+    //   winnersFunc: calculateTicTacToeWinner(current.squares),
+  };
+  const [obj, dispatch] = useReducer(reducer, initialState);
 
   //variables
   const current = obj.history[obj.step];
@@ -33,10 +44,10 @@ export const Game = () => {
   };
   const jumpTo = (step) => {
     dispatch(jump(step));
-    //if the step we move is even the next player is must be "x"
-    step % 2 === 0
-      ? dispatchOneReducer({ type: 'SET_PLAYER', payload: true })
-      : dispatchOneReducer({ type: 'SET_PLAYER', payload: false });
+    // //if the step we move is even the next player is must be "x"
+    // step % 2 === 0
+    //   ? dispatchOneReducer({ type: 'SET_PLAYER', payload: true })
+    //   : dispatchOneReducer({ type: 'SET_PLAYER', payload: false });
   };
   //console.log(history);
   const moves = obj.history.map((step, move) => {

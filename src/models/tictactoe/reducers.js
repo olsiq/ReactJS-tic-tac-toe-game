@@ -1,4 +1,4 @@
-import { PLAY } from './actions';
+import { PLAY, JUMP_TO } from './actions';
 
 import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
 
@@ -11,26 +11,29 @@ const initialState = {
     },
   ],
 
-  current: history[step],
-  winnersFunc: calculateTicTacToeWinner(current.squares),
-  winner: null,
-  winners: null,
-  status: `next player X`,
+  //   current: history[step],
+  //   winnersFunc: calculateTicTacToeWinner(current.squares),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'JUMP_TO':
+    case JUMP_TO:
+      let newplayer;
+      if (action.payload.step % 2 === 0) {
+        newplayer = true;
+      } else {
+        newplayer = false;
+      }
       return {
-        player: state.player,
-        step: action.payload,
+        player: newplayer,
+        step: action.payload.step,
         history: state.history,
       };
 
     case PLAY:
       //if we click a btn in previous move history will update
 
-      const funcHistory = state.history.slice(0, obj.step + 1);
+      const funcHistory = state.history.slice(0, state.step + 1);
 
       const current = funcHistory[state.step];
 
