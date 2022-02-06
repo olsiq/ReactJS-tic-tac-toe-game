@@ -11,11 +11,20 @@ const initialState = {
     },
   ],
 
-  //   current: history[step],
-  //   winnersFunc: calculateTicTacToeWinner(current.squares),
+  current: {
+    squares: Array(9).fill(null),
+  },
+  winnersFunc: null,
 };
 
 const reducer = (state = initialState, action) => {
+  const current = state.history[state.step];
+  // console.log(current);
+  const winnersFunc = calculateTicTacToeWinner(current.squares);
+
+  let winners;
+  winnersFunc && (winners = winnersFunc.slice(1));
+
   switch (action.type) {
     case JUMP_TO:
       let newplayer;
@@ -39,13 +48,14 @@ const reducer = (state = initialState, action) => {
 
       //we copy the squares array from current object to squaresInFunc
       const squaresInFunc = current.squares.slice();
-
+      console.log(squaresInFunc);
+      console.log(squaresInFunc[action.payload.i]);
       // //one each click we check if we won or if btn has a value
       if (
         calculateTicTacToeWinner(squaresInFunc) ||
         squaresInFunc[action.payload.i]
       ) {
-        return;
+        return console.log('same');
       }
       squaresInFunc[action.payload.i] = state.player ? 'X' : 'O';
       const changeHistory = funcHistory.concat([{ squares: squaresInFunc }]);
@@ -53,6 +63,7 @@ const reducer = (state = initialState, action) => {
         player: !state.player,
         step: funcHistory.length,
         history: changeHistory,
+        current: state.current,
       };
   }
 };

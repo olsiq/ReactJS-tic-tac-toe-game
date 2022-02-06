@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
-import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
-import { reducer } from 'models/tictactoe/reducers';
+//import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
+import { reducer, initialState } from 'models/tictactoe/reducers';
 import { Board } from 'components/board';
 
 import './game.css';
@@ -9,45 +9,16 @@ import { play, jump } from 'models/tictactoe/actions';
 
 export const Game = () => {
   //use reduce
-  const initialState = {
-    player: true,
-    step: 0,
-    history: [
-      {
-        squares: Array(9).fill(null),
-      },
-    ],
 
-    //   current: history[step],
-    //   winnersFunc: calculateTicTacToeWinner(current.squares),
-  };
   const [obj, dispatch] = useReducer(reducer, initialState);
 
-  //variables
-  const current = obj.history[obj.step];
-  // console.log(current);
-  const winnersFunc = calculateTicTacToeWinner(current.squares);
-  const winner = winnersFunc ? winnersFunc.slice(0, 1) : null;
-  let winners;
-  winnersFunc && (winners = winnersFunc.slice(1));
-  //status
-  let status;
-  winner
-    ? (status = `winner ${winner}`)
-    : (status = `next player ${obj.player ? 'X' : 'O'}`);
-  if (obj.step === 9 && !winner) {
-    status = 'DRAW';
-  }
+  let status = `next player ${obj.player ? 'X' : 'O'}`;
   //click function
   const handleClick = (i) => {
     dispatch(play({ i }));
   };
   const jumpTo = (step) => {
     dispatch(jump(step));
-    // //if the step we move is even the next player is must be "x"
-    // step % 2 === 0
-    //   ? dispatchOneReducer({ type: 'SET_PLAYER', payload: true })
-    //   : dispatchOneReducer({ type: 'SET_PLAYER', payload: false });
   };
   //console.log(history);
   const moves = obj.history.map((step, move) => {
@@ -62,7 +33,7 @@ export const Game = () => {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board squares={current.squares} onClick={(i) => handleClick(i)} />
+        <Board squares={obj.current.squares} onClick={(i) => handleClick(i)} />
       </div>
       <div className='game-info'>
         <div>{status}</div>
