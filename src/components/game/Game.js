@@ -1,24 +1,16 @@
 import React, { useReducer } from 'react';
 
 import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
-import { oneReducer } from 'libraries/reducers';
+import { reducer } from 'models/tictactoe/reducers';
 import { Board } from 'components/board';
 
 import './game.css';
+import { play } from 'models/tictactoe/actions';
 
 export const Game = () => {
   //use reduce
-  const initial = {
-    player: true,
-    step: 0,
-    history: [
-      {
-        squares: Array(9).fill(null),
-      },
-    ],
-  };
 
-  const [obj, dispatchOneReducer] = useReducer(oneReducer, initial);
+  const [obj, dispatch] = useReducer(reducer);
 
   //variables
   const current = obj.history[obj.step];
@@ -37,29 +29,10 @@ export const Game = () => {
   }
   //click function
   const handleClick = (i) => {
-    //if we click a btn in previous move history will update
-
-    const funcHistory = obj.history.slice(0, obj.step + 1);
-
-    const current = funcHistory[obj.step];
-
-    //we copy the squares array from current object to squaresInFunc
-    const squaresInFunc = current.squares.slice();
-
-    // //one each click we check if we won or if btn has a value
-    if (calculateTicTacToeWinner(squaresInFunc) || squaresInFunc[i]) {
-      return;
-    }
-    squaresInFunc[i] = obj.player ? 'X' : 'O';
-    const changeHistory = funcHistory.concat([{ squares: squaresInFunc }]);
-    dispatchOneReducer({
-      type: 'ON_CLICK',
-      payload2: changeHistory,
-      payload1: funcHistory.length,
-    });
+    dispatch(play({ i }));
   };
   const jumpTo = (step) => {
-    dispatchOneReducer({ type: 'JUMP_TO', payload: step });
+    dispatch(jump(step));
     //if the step we move is even the next player is must be "x"
     step % 2 === 0
       ? dispatchOneReducer({ type: 'SET_PLAYER', payload: true })
