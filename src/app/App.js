@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { useReducer } from 'react';
+
+import { reducer, initialState } from 'models/tictactoe/reducers';
+import { play, jump } from 'models/tictactoe/actions';
 
 import { Game } from '../components';
 
 function App() {
-  return <Game />;
+  const [gameState, dispatch] = useReducer(reducer, initialState);
+
+  const handleClick = (i) => {
+    dispatch(play({ i }));
+  };
+
+  const jumpTo = (step) => {
+    dispatch(jump({ step }));
+  };
+
+  const moves = gameState.history.map((step, move) => {
+    const description = move ? `go to move ${move}` : `Start!`;
+    return (
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    );
+  });
+  return (
+    <Game
+      moves={moves}
+      squares={gameState.current.squares}
+      click={(i) => handleClick(i)}
+      status={gameState.status}
+    />
+  );
 }
 
 export { App };
