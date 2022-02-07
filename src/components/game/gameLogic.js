@@ -1,13 +1,9 @@
 import React, { useReducer } from 'react';
-
 import { reducer, initialState } from 'models/tictactoe/reducers';
 
-import { Board } from 'components/board';
-
-import './game.css';
 import { play, jump } from 'models/tictactoe/actions';
 
-export const Game = (props) => {
+export const useHook = () => {
   const [gameState, dispatch] = useReducer(reducer, initialState);
 
   const handleClick = (i) => {
@@ -27,18 +23,5 @@ export const Game = (props) => {
     );
   });
 
-  return (
-    <div className='game'>
-      <div className='game-board'>
-        <Board
-          squares={gameState.current.squares}
-          onClick={(i) => handleClick(i)}
-        />
-      </div>
-      <div className='game-info'>
-        <div>{gameState.status}</div>
-        <ol>{moves}</ol>
-      </div>
-    </div>
-  );
+  return gameState, handleClick, moves, jumpTo;
 };
