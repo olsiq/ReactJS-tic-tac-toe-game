@@ -1,4 +1,6 @@
-import { PLAY, JUMP_TO, GAME_OVER } from './actions';
+import { PLAY, JUMP_TO } from './actions';
+
+//import { GAME_OVER } from './actions';
 
 import { calculateTicTacToeWinner } from 'libraries/helpers/tictactoe';
 
@@ -83,19 +85,19 @@ const reducer = (state = initialState, action) => {
         winner: updatedWinner,
       };
 
-    case GAME_OVER:
-      const winnerIs = state.player
-        ? 'Winner is Player O'
-        : 'Winner is Player X';
+    // case GAME_OVER:
+    //   const winnerIs = state.player
+    //     ? 'Winner is Player O'
+    //     : 'Winner is Player X';
 
-      return {
-        player: state.player,
-        step: state.step,
-        history: state.history,
-        current: state.current,
-        status: winnerIs,
-        winner: true,
-      };
+    //   return {
+    //     player: state.player,
+    //     step: state.step,
+    //     history: state.history,
+    //     current: state.current,
+    //     status: winnerIs,
+    //     winner: true,
+    //   };
 
     default:
       console.log('error at switch statement');
