@@ -28,7 +28,7 @@ function App() {
     <Game
       moves={moves}
       squares={gameState.current.squares}
-      click={(i) => handleClick(i)}
+      game={(i) => handleClick(i)}
       status={gameState.status}
     />
   );
