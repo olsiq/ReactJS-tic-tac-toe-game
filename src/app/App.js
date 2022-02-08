@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
 import { reducer, initialState } from 'models/tictactoe/reducers';
-import { play, jump } from 'models/tictactoe/actions';
+import { play, jumpTo } from 'models/tictactoe/actions';
 
 import { Game } from '../components';
 
@@ -12,21 +12,14 @@ function App() {
     dispatch(play({ i }));
   };
 
-  const jumpTo = (step) => {
-    dispatch(jump({ step }));
+  const jump = (step) => {
+    dispatch(jumpTo({ step }));
   };
 
-  const moves = gameState.history.map((step, move) => {
-    const description = move ? `go to move ${move}` : `Start!`;
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
   return (
     <Game
-      moves={moves}
+      jump={(step) => jump(step)}
+      history={gameState.history}
       squares={gameState.current.squares}
       game={(i) => handleClick(i)}
       status={gameState.status}

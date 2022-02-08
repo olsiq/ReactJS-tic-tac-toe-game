@@ -1,4 +1,4 @@
-import { PLAY, JUMP_TO } from './actions';
+import { play, jumpTo } from './actions';
 
 //import { GAME_OVER } from './actions';
 
@@ -23,7 +23,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case JUMP_TO:
+    case jumpTo.type:
       const updatedCurrent = state.history[action.payload.step];
 
       let newplayer;
@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
         winner: false,
       };
 
-    case PLAY:
+    case play.type:
       //if we click a btn in previous move history will update
 
       const funcHistory = state.history.slice(0, state.step + 1);

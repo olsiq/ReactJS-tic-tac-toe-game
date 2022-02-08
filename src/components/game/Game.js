@@ -4,15 +4,24 @@ import { Board } from 'components/board';
 
 import './game.css';
 
-export const Game = (props) => {
+export const Game = ({ squares, game, status, history, jump }) => {
+  const moves = history.map((step, move) => {
+    const description = move ? `go to move ${move}` : `Start!`;
+    return (
+      <li key={move}>
+        <button onClick={() => jump(move)}>{description}</button>
+      </li>
+    );
+  });
+
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board squares={props.squares} onClick={props.game} />
+        <Board squares={squares} onClick={game} />
       </div>
       <div className='game-info'>
-        <div>{props.status}</div>
-        <ol>{props.moves}</ol>
+        <div>{status}</div>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
