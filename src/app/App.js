@@ -26,5 +26,4 @@ function App() {
     />
   );
 }
-
 export { App };
