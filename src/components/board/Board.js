@@ -6,11 +6,7 @@ import './board.css';
 
 function Board({ squares, play }) {
   const renderSquare = (i) => (
-    <Square
-      classes={`square s${i}`}
-      value={squares[i]}
-      onClick={() => play(i)}
-    />
+    <Square value={squares[i]} play={() => play(i)} />
   );
 
   const renderRow = (a, b, c) => (
