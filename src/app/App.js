@@ -9,7 +9,7 @@ import { Game } from '../components';
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const play = (i) => {
+  const game = (i) => {
     dispatch(play({ i }));
   };
 
@@ -22,7 +22,7 @@ function App() {
       jump={(step) => jump(step)}
       history={history(state)}
       squares={squares(state)}
-      play={(i) => play(i)}
+      play={game}
       status={status(state)}
     />
   );

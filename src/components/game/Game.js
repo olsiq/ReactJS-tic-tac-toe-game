@@ -17,7 +17,7 @@ export const Game = ({ squares, play, status, history, jump }) => {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board squares={squares} onClick={play} />
+        <Board squares={squares} play={play} />
       </div>
       <div className='game-info'>
         <div>{status}</div>
