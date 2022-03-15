@@ -4,7 +4,7 @@ import { Board } from 'components/board';
 
 import './game.css';
 
-export const Game = ({ squares, game, status, history, jump }) => {
+export const Game = ({ squares, play, status, history, jump }) => {
   const moves = history.map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
@@ -17,7 +17,7 @@ export const Game = ({ squares, game, status, history, jump }) => {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board squares={squares} onClick={game} />
+        <Board squares={squares} onClick={play} />
       </div>
       <div className='game-info'>
         <div>{status}</div>

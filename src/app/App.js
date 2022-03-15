@@ -2,13 +2,14 @@ import React, { useReducer } from 'react';
 
 import { reducer, initialState } from 'models/tictactoe/reducers';
 import { play, jumpTo } from 'models/tictactoe/actions';
+import { history, squares, status } from 'models/tictactoe/selectors';
 
 import { Game } from '../components';
 
 function App() {
-  const [gameState, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleClick = (i) => {
+  const play = (i) => {
     dispatch(play({ i }));
   };
 
@@ -19,10 +20,10 @@ function App() {
   return (
     <Game
       jump={(step) => jump(step)}
-      history={gameState.history}
-      squares={gameState.current.squares}
-      game={(i) => handleClick(i)}
-      status={gameState.status}
+      history={history(state)}
+      squares={squares(state)}
+      play={(i) => play(i)}
+      status={status(state)}
     />
   );
 }
