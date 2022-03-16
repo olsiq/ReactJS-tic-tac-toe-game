@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { DispatchContext, MyContext } from 'app/App';
+import { DispatchContext, MyContext } from 'context/Context';
 import { squares } from 'models/tictactoe/selectors';
 
 import './square.css';

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Board } from 'components/board';
-import { DispatchContext, MyContext } from 'app/App';
+import { DispatchContext, MyContext } from 'context/Context';
 
 import { status, history } from 'models/tictactoe/selectors';
 
