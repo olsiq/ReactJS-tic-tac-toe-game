@@ -1,8 +1,9 @@
 import React, { useReducer, createContext } from 'react';
-import { reducer, initialState } from 'models/tictactoe/reducers';
-import { play, jumpTo } from 'models/tictactoe/actions';
 
 import { Game } from '../components';
+
+import { reducer, initialState } from 'models/tictactoe/reducers';
+import { play, jumpTo } from 'models/tictactoe/actions';
 
 export const MyContext = createContext(initialState);
 
@@ -19,13 +20,7 @@ function App() {
 
   return (
     <MyContext.Provider value={[state, game, jump]}>
-      <Game
-      //jump={jump}
-      //history={history(state)}
-      // squares={squares(state)}
-      // play={game}
-      // status={status(state)}
-      />
+      <Game />
     </MyContext.Provider>
   );
 }

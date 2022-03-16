@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { MyContext } from 'app/App';
-import { status, history } from 'models/tictactoe/selectors';
 
 import { Board } from 'components/board';
+import { MyContext } from 'app/App';
+
+import { status, history } from 'models/tictactoe/selectors';
 
 import './game.css';
 
