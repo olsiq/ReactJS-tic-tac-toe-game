@@ -1,17 +1,16 @@
 import React, { useContext } from 'react';
 
 import { Board } from 'components/board';
-import { MyContext } from 'app/App';
+import { DispatchContext, MyContext } from 'app/App';
 
 import { status, history } from 'models/tictactoe/selectors';
 
 import './game.css';
 
 export const Game = ({ play }) => {
-  const ctx = useContext(MyContext);
+  const state = useContext(MyContext);
 
-  const state = ctx[0];
-  const jump = ctx[2];
+  const jump = useContext(DispatchContext)[1];
   const view = status(state);
 
   const moves = history(state).map((step, move) => {

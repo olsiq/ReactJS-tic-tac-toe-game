@@ -6,6 +6,7 @@ import { reducer, initialState } from 'models/tictactoe/reducers';
 import { play, jumpTo } from 'models/tictactoe/actions';
 
 export const MyContext = createContext(initialState);
+export const DispatchContext = createContext();
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -19,8 +20,10 @@ function App() {
   };
 
   return (
-    <MyContext.Provider value={[state, game, jump]}>
-      <Game />
+    <MyContext.Provider value={state}>
+      <DispatchContext.Provider value={[game, jump]}>
+        <Game />
+      </DispatchContext.Provider>
     </MyContext.Provider>
   );
 }
