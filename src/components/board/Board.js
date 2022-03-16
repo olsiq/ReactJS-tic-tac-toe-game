@@ -4,10 +4,8 @@ import { Square } from 'components/square';
 
 import './board.css';
 
-function Board({ squares, play }) {
-  const renderSquare = (i) => (
-    <Square value={squares[i]} play={() => play(i)} />
-  );
+function Board({ play }) {
+  const renderSquare = (i) => <Square squareValue={i} />;
 
   const renderRow = (a, b, c) => (
     <div className='board-row'>
