@@ -6,20 +6,11 @@ export const gameSlice = createSlice({
   name: 'gameLogic',
   initialState,
   reducers: {
-    jumpTo: (state, action) => {
-      state.history = state.history[action.payload.step];
-      let newPlayer;
-      action.payload.step % 2 === 1 ? (newPlayer = false) : (newPlayer = true);
-      state.status = newPlayer ? 'Current Player X' : `Current Player O`;
-    },
-    play: (state, action) => {
-      const funcHistory = state.history.slice(0, state.step + 1);
-
+    play: (state, payload) => {
+      const funcHistory = state.history;
       const current = funcHistory[state.step];
-
       //we copy the squares array from current object to squaresInFunc
       const squaresInFunc = current.squares;
-
       const updatedWinner = calculateTicTacToeWinner(squaresInFunc)
         ? true
         : false;
@@ -27,15 +18,13 @@ export const gameSlice = createSlice({
       let updatedStatus = state.player
         ? 'Current Player O'
         : `Current Player X`;
-
+      console.log(state.history.slice(0, state.step + 1));
       // //one each click we check if we won or if btn has a value
-      if (
-        calculateTicTacToeWinner(squaresInFunc) ||
-        squaresInFunc[action.payload.i]
-      ) {
+      if (calculateTicTacToeWinner(squaresInFunc) || squaresInFunc[payload]) {
         state.winner = updatedWinner;
       } else {
-        squaresInFunc[action.payload.i] = state.player ? 'X' : 'O';
+        squaresInFunc[payload] = state.player ? 'X' : 'O';
+        console.log(squaresInFunc[1]);
         const changeHistory = funcHistory.concat([{ squares: squaresInFunc }]);
 
         state.player = !state.player;
@@ -46,10 +35,16 @@ export const gameSlice = createSlice({
         state.winner = updatedWinner;
       }
     },
+    jumpTo: (state, payload) => {
+      state.history = state.history[payload.step];
+      let newPlayer;
+      payload.step % 2 === 1 ? (newPlayer = false) : (newPlayer = true);
+      state.status = newPlayer ? 'Current Player X' : `Current Player O`;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { jumpTo, play } = counterSlice.actions;
+export const action = gameSlice.actions;
 
-export default gameSlice.reducer;
+// export default gameSlice.reducer;

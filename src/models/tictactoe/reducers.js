@@ -65,12 +65,15 @@ const reducer = (state = initialState, action) => {
         calculateTicTacToeWinner(squaresInFunc) ||
         squaresInFunc[action.payload.i]
       ) {
+        const theWinner = !state.player ? 'player X' : 'player O';
+        updatedWinner && (updatedStatus = `Game is over, ${theWinner} has won`);
+
         return {
           player: state.player,
           step: state.step,
           history: state.history,
           current: state.current,
-          status: state.status,
+          status: updatedStatus,
           winner: updatedWinner,
         };
       }
@@ -84,20 +87,6 @@ const reducer = (state = initialState, action) => {
         status: updatedStatus,
         winner: updatedWinner,
       };
-
-    // case GAME_OVER:
-    //   const winnerIs = state.player
-    //     ? 'Winner is Player O'
-    //     : 'Winner is Player X';
-
-    //   return {
-    //     player: state.player,
-    //     step: state.step,
-    //     history: state.history,
-    //     current: state.current,
-    //     status: winnerIs,
-    //     winner: true,
-    //   };
 
     default:
       console.log('error at switch statement');
