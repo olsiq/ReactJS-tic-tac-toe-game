@@ -1,6 +1,6 @@
-import React from 'react';
-import { Context } from 'context/Context';
-import { Game } from '../components';
+import React from "react";
+import { Context } from "context/Context";
+import { Game } from "../components";
 
 const App = () => {
   return (
