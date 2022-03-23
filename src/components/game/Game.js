@@ -1,23 +1,22 @@
 import React, { useContext } from 'react';
 
 import { Board } from 'components/board';
-import { DispatchContext, MyContext } from 'context/Context';
+import { MyContext } from 'context/Context';
 
 import { status, history } from 'models/tictactoe/selectors';
 
 import './game.css';
 
-export const Game = ({ play }) => {
-  const state = useContext(MyContext);
+export const Game = () => {
+  const context = useContext(MyContext);
 
-  const jump = useContext(DispatchContext)[1];
-  const view = status(state);
+  const view = status(context);
 
-  const moves = history(state).map((step, move) => {
+  const moves = history(context).map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
       <li key={move}>
-        <button onClick={() => jump(move)}>{description}</button>
+        <button onClick={() => context.jump(move)}>{description}</button>
       </li>
     );
   });
@@ -25,7 +24,7 @@ export const Game = ({ play }) => {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board play={play} />
+        <Board />
       </div>
       <div className='game-info'>
         <div>{view}</div>
