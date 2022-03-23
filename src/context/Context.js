@@ -1,7 +1,7 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer, createContext } from "react";
 
-import { reducer, initialState } from 'models/tictactoe/reducers';
-import { play, jumpTo } from 'models/tictactoe/actions';
+import { reducer, initialState } from "models/tictactoe/reducers";
+import { play, jumpTo } from "models/tictactoe/actions";
 
 const MyContext = createContext(initialState);
 const DispatchContext = createContext();
@@ -16,10 +16,10 @@ const Context = (props) => {
   const jump = (step) => {
     dispatch(jumpTo({ step }));
   };
-
+  const action = { jump: jump, game: game };
   return (
     <MyContext.Provider value={state}>
-      <DispatchContext.Provider value={[game, jump]}>
+      <DispatchContext.Provider value={action}>
         {props.children}
       </DispatchContext.Provider>
     </MyContext.Provider>

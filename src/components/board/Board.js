@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import { Square } from 'components/square';
+import { Square } from "components/square";
 
-import './board.css';
+import "./board.css";
 
-function Board({ play }) {
+function Board() {
   const renderSquare = (i) => <Square squareValue={i} />;
 
   const renderRow = (a, b, c) => (
-    <div className='board-row'>
+    <div className="board-row">
       {renderSquare(a)}
       {renderSquare(b)}
       {renderSquare(c)}
