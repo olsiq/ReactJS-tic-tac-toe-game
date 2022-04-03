@@ -19,7 +19,7 @@ export const gameSlice = createSlice({
         ? 'Current Player O'
         : `Current Player X`;
       console.log(state.history.slice(0, state.step + 1));
-      // //one each click we check if we won or if btn has a value
+      //one each click we check if we won or if btn has a value
       if (calculateTicTacToeWinner(squaresInFunc) || squaresInFunc[payload]) {
         state.winner = updatedWinner;
       } else {
