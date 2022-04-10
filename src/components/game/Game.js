@@ -1,58 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext } from 'react';
 
-import { calculateTicTacToeWinner } from "libraries/tictactoe";
-import { Board } from "components/board";
+import { Board } from 'components/board';
+import { MyContext } from 'context/Context';
 
-import "./game.css";
+import { status, history } from 'models/tictactoe/selectors';
 
-function Game() {
-  //states
-  const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
-  const [xIsNext, setXIsnext] = useState(true);
-  const [stepNumber, setStepNumber] = useState(0);
+import './game.css';
 
-  //variables
-  const current = history[stepNumber];
+export const Game = () => {
+  const context = useContext(MyContext);
 
-  const winnersFunc = calculateTicTacToeWinner(current.squares);
-  const winner = winnersFunc ? winnersFunc.slice(0, 1) : null;
-  let winners;
-  winnersFunc && (winners = winnersFunc.slice(1));
-  //status
-  let status;
-  winner
-    ? (status = `winner ${winner}`)
-    : (status = `next player ${xIsNext ? "x" : "o"}`);
+  const view = status(context);
 
-  //(true) && (code) ==> if left of AND operator is true continue else go to next line
-  //if there are no winners status is draw
-  stepNumber === 9 && (status = "DRAW");
-  //click function
-  const handleClick = (i) => {
-    //if we clicka btn in previous move history will update
-    const funcHistory = history.slice(0, stepNumber + 1);
-    const current = funcHistory[stepNumber];
-    //we copy the squares array from current object to squaresInFunc
-    const squaresInFunc = current.squares.slice();
-    //one each click we check if we won or if btn has a value
-    if (calculateTicTacToeWinner(squaresInFunc) || squaresInFunc[i]) {
-      return;
-    }
-    squaresInFunc[i] = xIsNext ? "x" : "o";
-    setHistory(funcHistory.concat([{ squares: squaresInFunc }]));
-    setStepNumber(funcHistory.length);
-    setXIsnext(!xIsNext);
-  };
-  const jumpTo = (step) => {
-    setStepNumber(step);
-    //if the step we move is even the next player is must be "x"
-    setXIsnext(step % 2 === 0);
-  };
-  const moves = history.map((step, move) => {
+  const moves = history(context).map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button onClick={() => context.jump(move)}>{description}</button>
       </li>
     );
   });
@@ -60,14 +24,12 @@ function Game() {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board squares={current.squares} onClick={(i) => handleClick(i)} />
+        <Board />
       </div>
       <div className='game-info'>
-        <div>{status}</div>
+        <div>{view}</div>
         <ol>{moves}</ol>
       </div>
     </div>
   );
-}
-
-export { Game };
+};

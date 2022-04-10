@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useContext } from 'react';
+import { MyContext } from 'context/Context';
+import { squares } from 'models/tictactoe/selectors';
 
-import "./square.css";
+import './square.css';
 
-const Square = ({ value, onClick }) => (
-  <button onClick={onClick}>{value}</button>
-);
+const Square = ({ squareValue }) => {
+  const context = useContext(MyContext);
+  const play = context.game;
+  const value = squares(context)[squareValue];
+  return (
+    <button className='square' onClick={() => play(squareValue)}>
+      {value}
+    </button>
+  );
+};
 
 export { Square };

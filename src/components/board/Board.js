@@ -1,17 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { Square } from "components/square";
+import { Square } from 'components/square';
 
-import "./board.css";
+import './board.css';
 
-function Board({ squares, onClick }) {
-  const renderSquare = (i) => (
-    <Square
-      classes={`square s${i}`}
-      value={squares[i]}
-      onClick={() => onClick(i)}
-    />
-  );
+function Board({ play }) {
+  const renderSquare = (i) => <Square squareValue={i} />;
 
   const renderRow = (a, b, c) => (
     <div className='board-row'>
