@@ -4,17 +4,11 @@ import { Square } from "components/square";
 
 import "./board.css";
 
-function Board({ squares, onClick }) {
-  const renderSquare = (i) => (
-    <Square
-      classes={`square s${i}`}
-      value={squares[i]}
-      onClick={() => onClick(i)}
-    />
-  );
+function Board() {
+  const renderSquare = (i) => <Square squareValue={i} />;
 
   const renderRow = (a, b, c) => (
-    <div className='board-row'>
+    <div className="board-row">
       {renderSquare(a)}
       {renderSquare(b)}
       {renderSquare(c)}
