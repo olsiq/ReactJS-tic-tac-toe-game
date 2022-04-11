@@ -1,16 +1,15 @@
 import React from 'react';
 import { Board } from 'components/board';
 import { useDispatch, useSelector } from 'react-redux';
-import { action } from 'redux/slice';
+import { jumpTo } from 'redux/slice';
 
 import './game.css';
 
 export const Game = () => {
-  const dispatch = useDispatch();
-  const jump = (payload) => dispatch(action.jumpTo(payload));
   const history = useSelector((state) => state.history);
   const status = useSelector((state) => state.status);
-  console.log(history);
+  const dispatch = useDispatch();
+  const jump = (payload) => dispatch(jumpTo(payload));
   const moves = history.map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
