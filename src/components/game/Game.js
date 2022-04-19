@@ -1,7 +1,7 @@
 import React from 'react';
 import { Board } from 'components/board';
 import { useDispatch, useSelector } from 'react-redux';
-import { jumpTo } from 'redux/slice';
+import { jumpTo } from 'redux/index';
 
 import './game.css';
 
