@@ -4,8 +4,10 @@ import { Square } from "components/square";
 
 import "./board.css";
 
-function Board() {
-  const renderSquare = (i) => <Square squareValue={i} />;
+
+const Board = () => {
+  const renderSquare = (i) => <Square value={i} />;
+
 
   const renderRow = (a, b, c) => (
     <div className="board-row">
@@ -22,6 +24,6 @@ function Board() {
       {renderRow(6, 7, 8)}
     </div>
   );
-}
+};
 
 export { Board };

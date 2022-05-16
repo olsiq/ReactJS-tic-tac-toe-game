@@ -1,19 +1,19 @@
-import React, { useContext } from "react";
 
-import { Board } from "components/board";
-import { DispatchContext, MyContext } from "context/Context";
+import React from 'react';
+import { Board } from 'components/board';
+import { useDispatch, useSelector } from 'react-redux';
+import { jumpTo } from 'redux/index';
 
 import { status, history } from "models/tictactoe/selectors";
 
-import "./game.css";
 
-export const Game = ({ play }) => {
-  const state = useContext(MyContext);
+export const Game = () => {
+  const history = useSelector((state) => state.history);
+  const status = useSelector((state) => state.status);
+  const dispatch = useDispatch();
+  const jump = (payload) => dispatch(jumpTo(payload));
+  const moves = history.map((step, move) => {
 
-  const jump = useContext(DispatchContext).jump;
-  const view = status(state);
-
-  const moves = history(state).map((step, move) => {
     const description = move ? `go to move ${move}` : `Start!`;
     return (
       <li key={move}>
@@ -21,10 +21,11 @@ export const Game = ({ play }) => {
       </li>
     );
   });
-
   return (
-    <div className="game">
-      <div className="game-board">
+
+    <div className='game'>
+      <div className='game-board'>
+
         <Board />
       </div>
       <div className="game-info">

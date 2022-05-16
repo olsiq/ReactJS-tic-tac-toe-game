@@ -16,8 +16,3 @@ export const jumpTo = Action('JUMP_TO');
 //   payload,
 // });
 // jump.type = JUMP_TO;
-
-// export const GAME_OVER = 'GAME_OVER';
-// export const gameOver = () => ({
-//   type: GAME_OVER,
-// });

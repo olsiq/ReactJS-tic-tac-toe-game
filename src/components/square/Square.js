@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
-import { DispatchContext, MyContext } from "context/Context";
-import { squares } from "models/tictactoe/selectors";
 
-import "./square.css";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Square = ({ squareValue }) => {
-  const state = useContext(MyContext);
-  const play = useContext(DispatchContext).game;
-  const value = squares(state)[squareValue];
+import { play } from 'redux/index';
+import './square.css';
+
+const Square = ({ value }) => {
+  const dispatch = useDispatch();
+  const squareValue = useSelector((state) => state.current.squares);
+  console.log(squareValue);
+
   return (
-    <button className="square" onClick={() => play(squareValue)}>
-      {value}
+    <button className='square' onClick={() => dispatch(play(value))}>
+      {squareValue[value]}
     </button>
   );
 };

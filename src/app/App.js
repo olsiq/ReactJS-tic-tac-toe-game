@@ -1,12 +1,17 @@
 import React from 'react';
-import { Context } from 'context/Context';
-import { Game } from '../components';
 
-const App = () => {
+import { Provider } from 'react-redux';
+
+import { Game } from '../components';
+import { store } from 'redux/index';
+
+
+function App() {
   return (
-    <Context>
+    <Provider store={store}>
       <Game />
-    </Context>
+    </Provider>
+
   );
 };
 export { App };
