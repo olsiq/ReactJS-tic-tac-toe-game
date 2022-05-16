@@ -1,9 +1,11 @@
+
 import React from 'react';
 import { Board } from 'components/board';
 import { useDispatch, useSelector } from 'react-redux';
 import { jumpTo } from 'redux/index';
 
-import './game.css';
+import { status, history } from "models/tictactoe/selectors";
+
 
 export const Game = () => {
   const history = useSelector((state) => state.history);
@@ -11,6 +13,7 @@ export const Game = () => {
   const dispatch = useDispatch();
   const jump = (payload) => dispatch(jumpTo(payload));
   const moves = history.map((step, move) => {
+
     const description = move ? `go to move ${move}` : `Start!`;
     return (
       <li key={move}>
@@ -19,12 +22,14 @@ export const Game = () => {
     );
   });
   return (
+
     <div className='game'>
       <div className='game-board'>
+
         <Board />
       </div>
-      <div className='game-info'>
-        <div>{status}</div>
+      <div className="game-info">
+        <div>{view}</div>
         <ol>{moves}</ol>
       </div>
     </div>
